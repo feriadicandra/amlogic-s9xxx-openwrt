@@ -9,7 +9,7 @@
 #======================================================================================================================
 
 #===== Do not modify the following parameter settings, Start =====
-build_openwrt=("s922x" "s922x-n2" "s905x3" "s905x2" "s912" "s912-t95z" "s905" "s905d" "s905d-ki" "s905x" "s905w")
+build_openwrt=("s905x2" "s905x")
 make_path=${PWD}
 tmp_path=${make_path}/tmp
 out_path=${make_path}/out
@@ -189,70 +189,12 @@ refactor_files() {
     fi
 
     case "${build_op}" in
-    s922x | belink | belinkpro | ugoos)
-        FDTFILE="meson-g12b-gtking-pro.dtb"
-        UBOOT_OVERLOAD="u-boot-gtkingpro.bin"
-        MAINLINE_UBOOT="/lib/u-boot/gtkingpro-u-boot.bin.sd.bin"
-        ANDROID_UBOOT=""
-        AMLOGIC_SOC="s922x"
-        ;;
-    s922x-n2 | odroid-n2)
-        FDTFILE="meson-g12b-gtking-pro-rev_a.dtb"
-        UBOOT_OVERLOAD="u-boot-gtkingpro.bin"
-        MAINLINE_UBOOT="/lib/u-boot/odroid-n2-u-boot.bin.sd.bin"
-        ANDROID_UBOOT=""
-        AMLOGIC_SOC="s922x"
-        ;;
-    s905x3 | x96 | hk1 | h96 | ugoosx3)
-        FDTFILE="meson-sm1-x96-max-plus-100m.dtb"
-        UBOOT_OVERLOAD="u-boot-x96maxplus.bin"
-        MAINLINE_UBOOT="/lib/u-boot/x96maxplus-u-boot.bin.sd.bin"
-        ANDROID_UBOOT="/lib/u-boot/hk1box-bootloader.img"
-        AMLOGIC_SOC="s905x3"
-        ;;
-    s905x2 | x96max4g | x96max2g)
-        FDTFILE="meson-g12a-x96-max.dtb"
+    s905x2 | x96max4g | x96max2g | A95XF2)
+        FDTFILE="meson-g12a-x96-max-rmii.dtb"
         UBOOT_OVERLOAD="u-boot-x96max.bin"
         MAINLINE_UBOOT="/lib/u-boot/x96max-u-boot.bin.sd.bin"
         ANDROID_UBOOT=""
         AMLOGIC_SOC="s905x2"
-        ;;
-    s912 | h96proplus | octopus)
-        FDTFILE="meson-gxm-octopus-planet.dtb"
-        UBOOT_OVERLOAD="u-boot-zyxq.bin"
-        MAINLINE_UBOOT=""
-        ANDROID_UBOOT=""
-        AMLOGIC_SOC="s912"
-        ;;
-    s912-t95z | s912-t95z-plus)
-        FDTFILE="meson-gxm-t95z-plus.dtb"
-        UBOOT_OVERLOAD="u-boot-s905x-s912.bin"
-        MAINLINE_UBOOT=""
-        ANDROID_UBOOT=""
-        AMLOGIC_SOC="s912"
-        ;;
-    s905 | beelinkminimx | mxqpro+)
-        FDTFILE="meson-gxbb-vega-s95-telos.dtb"
-        #FDTFILE="meson-gxbb-mxq-pro-plus.dtb"
-        UBOOT_OVERLOAD="u-boot-s905.bin"
-        #UBOOT_OVERLOAD="u-boot-p201.bin"
-        MAINLINE_UBOOT=""
-        ANDROID_UBOOT=""
-        AMLOGIC_SOC="s905"
-        ;;
-    s905d | n1)
-        FDTFILE="meson-gxl-s905d-phicomm-n1.dtb"
-        UBOOT_OVERLOAD="u-boot-n1.bin"
-        MAINLINE_UBOOT=""
-        ANDROID_UBOOT="/lib/u-boot/u-boot-2015-phicomm-n1.bin"
-        AMLOGIC_SOC="s905d"
-        ;;
-    s905d-ki)
-        FDTFILE="meson-gxl-s905d-mecool-ki-pro.dtb"
-        UBOOT_OVERLOAD="u-boot-p201.bin"
-        MAINLINE_UBOOT=""
-        ANDROID_UBOOT=""
-        AMLOGIC_SOC="s905d"
         ;;
     s905x | hg680p | b860h)
         FDTFILE="meson-gxl-s905x-p212.dtb"
@@ -260,13 +202,6 @@ refactor_files() {
         MAINLINE_UBOOT=""
         ANDROID_UBOOT=""
         AMLOGIC_SOC="s905x"
-        ;;
-    s905w | x96mini | tx3mini)
-        FDTFILE="meson-gxl-s905w-tx3-mini.dtb"
-        UBOOT_OVERLOAD="u-boot-s905x-s912.bin"
-        MAINLINE_UBOOT=""
-        ANDROID_UBOOT=""
-        AMLOGIC_SOC="s905w"
         ;;
     *)
         die "Have no this firmware: [ ${build_op} - ${kernel} ]"
@@ -592,17 +527,8 @@ choose_build() {
     done
     echo && read -p " Please select the Amlogic SoC: " pause
     case $pause in
-    11 | s922x) build="s922x" ;;
-    12 | s922x-n2) build="s922x-n2" ;;
-    13 | s905x3) build="s905x3" ;;
-    14 | s905x2) build="s905x2" ;;
-    15 | s912) build="s912" ;;
-    16 | s912-t95z) build="s912-t95z" ;;
-    17 | s905) build="s905" ;;
-    18 | s905d) build="s905d" ;;
-    19 | s905d-ki) build="s905d-ki" ;;
-    20 | s905x) build="s905x" ;;
-    21 | s905w) build="s905w" ;;
+    11 | s905x2) build="s905x2" ;;
+    12 | s905x) build="s905x" ;;
     *) die "Have no this Amlogic SoC" ;;
     esac
     tag ${build}
